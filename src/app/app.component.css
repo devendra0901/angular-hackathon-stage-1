@@ -35,3 +35,11 @@ table {
     right: 0;
     background: gold;
   }
+
+  h3 {
+    text-align: center;
+  }
+  
+  h1 {
+    text-align: center;
+  }
