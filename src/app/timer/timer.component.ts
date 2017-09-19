@@ -17,7 +17,7 @@ export class TimerComponent implements OnInit {
   // public stopwatchService: StopWatchService;
 
   public time: number;
-  public autoStart = false;
+  public autoStart = true;
 
   private timer: any;
 
@@ -32,7 +32,7 @@ export class TimerComponent implements OnInit {
 
       Observable.interval(1)
       .subscribe(x => {
-      this.stop_on_this(999 * 2); }
+      this.stop_on_this(999 * 60 * 90); }
     );
 }
 
