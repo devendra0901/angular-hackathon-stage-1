@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'app-game',
@@ -9,8 +9,22 @@ export class GameComponent implements OnInit {
 
   whiteId: number;
   temp: number;
-  score = 0;
+  score: number;
+  @Input() isGameOn = false;
+
+  constructor () {
+    this.score = 0;
+    if(!this.isGameOn) {
+      setInterval(() => { this.changeColor(); }, 1000 * 2);
+    }
+    
+    // setInterval(this.changeColor(), 5000);
+  }
   
+  setScore() {
+    this.score = 0;
+    this.isGameOn = false;
+  }
   getRandomintInclusive(a: number, b: number) {
     a = Math.ceil(a);
     b = Math.floor(b);
@@ -41,9 +55,10 @@ export class GameComponent implements OnInit {
     }
   
     sendId (clickedId: number) {
-      if (this.whiteId === clickedId) {
+      if (this.whiteId === clickedId && !this.isGameOn ) {
         this.score = this.score + 1;
         this.changeColor();
       }
     }
+
 }

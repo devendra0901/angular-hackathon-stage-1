@@ -1,39 +1,42 @@
-
-
-<app-timer></app-timer>
-
 <div class="container">
   	<div class="row">
-        <div class="col-3"></div>
-        <div class="col-6">
+        <div class="col-1"></div>
+        <div class="col-10">
           <h1>Your Score</h1>
         </div>
-        <div class="col-3"></div>
+        <div class="col-1"></div>
       </div>
     
       <div class="row">
-        <div class="col-3"></div>
-        <div class="col-6">
+        <div class="col-1"></div>
+        <div class="col-10">
           <h3>{{score}}</h3>
         </div>
-        <div class="col-3"></div>
+        <div class="col-1"></div>
       </div>
+    
+    <div class="row">
+      <div class="col-1"></div>
+
+      <div class="col-10">
+      <table>
+        <tr class="row">
+          <td class="content" [ngStyle]="{backgroundColor: getColor(1)}" (click)="sendId(1)">
+          </td>
+    
+          <td class="content" [ngStyle]="{backgroundColor: getColor(2)}" (click)="sendId(2)">
+          </td>
+        </tr>
       
-    <table>
-      <tr class="row">
-        <td class="content" [ngStyle]="{backgroundColor: getColor(1)}" (click)="sendId(1)">
-        </td>
-  
-        <td class="content" [ngStyle]="{backgroundColor: getColor(2)}" (click)="sendId(2)">
-        </td>
-      </tr>
-    
-      <tr class="row">
-        <td class="content" [ngStyle]="{backgroundColor: getColor(3)}" (click)="sendId(3)">
-        </td>
-    
-        <td class="content" [ngStyle]="{backgroundColor: getColor(4)}" (click)="sendId(4)">
-        </td>
-      </tr>
-    </table>
+        <tr class="row">
+          <td class="content" [ngStyle]="{backgroundColor: getColor(3)}" (click)="sendId(3)">
+          </td>
+      
+          <td class="content" [ngStyle]="{backgroundColor: getColor(4)}" (click)="sendId(4)">
+          </td>
+        </tr>
+      </table>
+      </div>
+      <div class="col-1"></div>
+    </div>
   </div>

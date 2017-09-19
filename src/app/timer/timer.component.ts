@@ -20,7 +20,9 @@ export class TimerComponent implements OnInit {
   public autoStart = true;
 
   private timer: any;
-
+  public mustStop = false;
+  done_five_ms = false;
+    five_ms = 5 * 1000;
   constructor(public stopwatchService: TimerService) {
       // timer service
       this.stopwatchService = stopwatchService;
@@ -32,10 +34,11 @@ export class TimerComponent implements OnInit {
 
       Observable.interval(1)
       .subscribe(x => {
-      this.stop_on_this(999 * 60 * 90); }
+      this.stop_on_this(1000 * 10);
+      this.five_ms_done_check(this.five_ms);
+        }
     );
 }
-
 
 
   formatTime(timeMs: number) {
@@ -44,77 +47,81 @@ export class TimerComponent implements OnInit {
 
       minutes = Math.floor(timeMs / 60000).toString();
       seconds = ((timeMs % 60000) / 1000).toFixed(3);
-    //   console.log(+minutes);
-    //   if (+minutes === 2) {
-    //       console.log(+minutes);
-    //       this.stop();
-    //   }
       return minutes + ':' + (+seconds < 10 ? '0' : '') + seconds;
   }
 
   getUpdate() {
-      // let self = this;
-
       return () => {
           this.time = this.stopwatchService.time();
-        //   console.log('get update:');
-        //   console.log(this.time);
       };
   }
 
-  lap() {
-      this.update();
+//   lap() {
+//       this.update();
 
-      if (this.time) {
-          this.stopwatchService.lap();
-      }
-  }
+//       if (this.time) {
+//           this.stopwatchService.lap();
+//       }
+//   }
 
   reset() {
       this.stopwatchService.reset();
       this.started = false;
       this.update();
+      this.start();
+      this.mustStop = false;
   }
 
-    stop_on_this(at_this_time): void {
-        if ( this.time >= at_this_time)  {
-            // console.log('hekk');
-            this.reset();
+stop_on_this(at_this_time): void {
+    if (!this.mustStop) {
+        if (this.time >= at_this_time) {
+            this.stop();
+            this.mustStop = true;
+            this.stopwatchService.mustStop_serve = true;
+            this.stopwatchService.publishData(true);
         }
     }
-  start() {
-      this.timer = setInterval(this.getUpdate(), 1);
-      this.stopwatchService.start();
-        //    stop once time finished
-        // Observable.interval(1000 * 2)
-        // .subscribe(x => {
-        //     this.stop(); }
-        // );
-  }
+}
 
-  stop() {
-      clearInterval(this.timer);
-      this.stopwatchService.stop();
-  }
+five_ms_done_check(time_five_ms): void {
+    if (this.mustStop === false) {
+        if ((this.time % 5000) <= 500) {
+            // console.log('done 5 sec');
+            this.done_five_ms = true;
+        } else {
+            this.done_five_ms = false;
+        }
+    }
+}
 
-  toggle() {
-      if (this.started) {
-          this.stop();
-      } else {
-          this.start();
-      }
+    start() {
+        this.timer = setInterval(this.getUpdate(), 1);
+        this.stopwatchService.start();
+    }
 
-      this.started = !this.started;
-  }
+    stop() {
+        clearInterval(this.timer);
+        this.stopwatchService.stop();
+    }
 
-  update() {
-      this.time = this.stopwatchService.time();
-  }
+    toggle() {
+        if (this.started) {
+            this.stop();
+        } else {
+            this.start();
+        }
 
-  onClick() {
-      console.log(this.stopwatchService);
-  }
+        this.started = !this.started;
+    }
 
-  ngOnInit() {
-  }
+    update() {
+        this.time = this.stopwatchService.time();
+    }
+
+    get_mustStop(): boolean {
+        return this.mustStop;
+    }
+
+    ngOnInit() {
+    }
 }

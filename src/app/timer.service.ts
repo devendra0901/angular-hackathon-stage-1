@@ -1,18 +1,24 @@
 import { Injectable } from '@angular/core';
+import { Subject} from 'rxjs/Subject';
 
 @Injectable()
 export class TimerService {
-
+    
+    private caseNumber = new Subject<boolean>();
+    caseNumber$ = this.caseNumber.asObservable();
 //   constructor() { }
   public laps: Lap[];
-
+        
       private startAt: number;
       private lapTime: number;
       timeMs: any;
+      mustStop_serve = false;
       constructor() {
           this.reset();
       }
-
+        publishData(data: boolean){
+            this.caseNumber.next(data);
+        }
       lap() {
            this.timeMs = this.startAt
                   ? this.lapTime + this.now() - this.startAt
@@ -54,6 +60,9 @@ export class TimerService {
       time() {
           return this.lapTime
               + (this.startAt ? this.now() - this.startAt : 0);
+      }
+      timer_restart() {
+
       }
 }
 

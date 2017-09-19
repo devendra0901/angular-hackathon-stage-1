@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { TimerComponent } from './timer/timer.component';
 
 @Component({
   selector: 'app-root',
@@ -7,5 +8,12 @@ import { Component, OnInit } from '@angular/core';
 })
 
 export class AppComponent {
+    
+    start = false;
+    title = 'Checkers';
+    timer: TimerComponent;
 
+    onClick() {
+      this.start = true;
+    }
 }

@@ -1,3 +1,22 @@
+<nav class="container-fluid">
+    <div class="row">
+    <ul class="col-12">
+        <li class="h1 col-7">{{title}}</li>
+        <li class="col-2"><button type="button" class="btn btn-success btn-large" (click)="time.reset(); onClick(); game.setScore();">Start Game</button></li>
+        <!-- <li class="col-2" ><button type="button" class="btn btn-success btn-small" (click)="time.reset()">Reset</button> </li> -->
+    </ul>
+    </div>
+</nav>
 
-<app-home></app-home>
+<div class="container" [hidden]="!start">
+    <div class="row">
+        <div class="col-9">
+            <app-game #game [isGameOn]="time.mustStop"></app-game>
+        </div>
+
+        <div class="col-3">
+            <app-timer #time></app-timer>
+        </div>
+    </div>
+</div>
 
